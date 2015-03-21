@@ -1,0 +1,15 @@
+{
+  "name": "node_personal",
+  "version": "0.0.0",
+  "description": "node_personal",
+  "main": "app.js",
+  "author": {
+    "name": "sisernha",
+    "email": ""
+  },
+  "dependencies": {
+    "express": "3.4.4",
+    "jade": "*",
+    "stylus": "*"
+  }
+}
