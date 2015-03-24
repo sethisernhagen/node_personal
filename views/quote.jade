@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  #wrap
+    .container
+        img(class="bubble-background", src="images/static_bubbles.png")
+        .row
+            .col-md-4
+                .text-background
+                    .text-block
+                          h2 #{title}.
+                          div
+                            p Please feel free to contact me.
+                            p Email
+                                br
+                                a(href="mailto:sisernhagen@gmail.com") sisernhagen@gmail.com
+                            p
+                            | LinkedIn
+                            br
+                            a(href="https://www.linkedin.com/in/sethisernhagen", target="_blank") www.linkedin.com/in/sethisernhagen
+                            p
+                            | GitHub
+                            br
+                            a(href="https://github.com/sethisernhagen", target="_blank") github.com/sethisernhagen
+    #push
+  .footer
+      p
+      | &copy; #{year} - Seth Isernhagen
