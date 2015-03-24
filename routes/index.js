@@ -19,7 +19,7 @@ exports.contact = function (req, res) {
 exports.quote = function (req, res) {
     
 
-    get_quote(function (err, quotes) {
+    get_quote(req, function (err, quotes) {
         if (err != null) {
             res.writeHead(503, { 'Content-Type' : 'application/json' });
             res.end(JSON.stringify({ error: 'file_error', message: err.message }) + '\n');
@@ -34,12 +34,12 @@ exports.quote = function (req, res) {
 
 
 
-function get_quote(callback) {
+function get_quote(req, callback) {
      
     var myQuote;
     
     yahooFinance.historical({
-        symbol: 'AAPL',
+        symbol: req.params.symbol,
         from: '2012-01-01',
         to: '2012-12-31',
   // period: 'd'  // 'd' (daily), 'w' (weekly), 'm' (monthly), 'v' (dividends only) 
