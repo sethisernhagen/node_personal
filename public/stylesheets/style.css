@@ -79,6 +79,18 @@ h6,
 #footer {
   height: 60px;
 }
+path {
+  stroke: #4682b4;
+  stroke-width: 2;
+  fill: none;
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #808080;
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
 @media (min-width: 768px) {
   .navbar-collapse.collapse {
     float: right;

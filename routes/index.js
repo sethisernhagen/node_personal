@@ -17,6 +17,11 @@ exports.contact = function (req, res) {
 };
 
 exports.quote = function (req, res) {
+    res.render('quote', { title: 'Quote', year: new Date().getFullYear() });
+};
+
+
+exports.getQuote = function (req, res) {
     
 
     get_quote(req, function (err, quotes) {

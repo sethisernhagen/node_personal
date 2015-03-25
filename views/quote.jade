@@ -3,26 +3,14 @@ extends layout
 block content
   #wrap
     .container
-        img(class="bubble-background", src="images/static_bubbles.png")
         .row
-            .col-md-4
-                .text-background
-                    .text-block
-                          h2 #{title}.
-                          div
-                            p Please feel free to contact me.
-                            p Email
-                                br
-                                a(href="mailto:sisernhagen@gmail.com") sisernhagen@gmail.com
-                            p
-                            | LinkedIn
-                            br
-                            a(href="https://www.linkedin.com/in/sethisernhagen", target="_blank") www.linkedin.com/in/sethisernhagen
-                            p
-                            | GitHub
-                            br
-                            a(href="https://github.com/sethisernhagen", target="_blank") github.com/sethisernhagen
+            #line-chart
     #push
   .footer
       p
       | &copy; #{year} - Seth Isernhagen
+      //include ../public/javascripts/d3_line_chart.js
+      //script(src='../public/javascripts/d3_line_chart.js')
+      script(src='http://d3js.org/d3.v3.min.js')
+      script(src='/javascripts/d3_line_chart.js')
+//script(src='/javascripts/d3_line_chart.js')
