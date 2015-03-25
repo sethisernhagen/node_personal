@@ -4,6 +4,21 @@ block content
   #wrap
     .container
         .row
+            h2 #{title}.
+            #symbol-dropdown.dropdown
+                button(class="btn btn-default", data-toggle="dropdown", id="symbol-button")
+                    span Amazon 
+                    span.caret
+                ul(class="dropdown-menu", role="menu", aria-labelledby="dropdownMenu1", id="symbol-ul")
+                    li(data-value="amzn")
+                        a(href="#").
+                            Amazon
+                    li(data-value="googl")
+                        a(href="#").
+                            Google
+                    li(data-value="advs")
+                        a(href="#").
+                            Advent
             #line-chart
     #push
   .footer
@@ -11,6 +26,9 @@ block content
       | &copy; #{year} - Seth Isernhagen
       //include ../public/javascripts/d3_line_chart.js
       //script(src='../public/javascripts/d3_line_chart.js')
-      script(src='http://d3js.org/d3.v3.min.js')
-      script(src='/javascripts/d3_line_chart.js')
+
+block scripts
+    script(src='/javascripts/symbol_dropdown.js')
+    script(src='http://d3js.org/d3.v3.min.js')
+    script(src='/javascripts/d3_line_chart.js')
 //script(src='/javascripts/d3_line_chart.js')

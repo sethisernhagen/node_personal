@@ -32,6 +32,7 @@
   <ItemGroup>
     <Compile Include="app.js" />
     <Compile Include="public\javascripts\d3_bubbles.js" />
+    <Compile Include="public\javascripts\symbol_dropdown.js" />
     <Compile Include="public\javascripts\d3_line_chart.js" />
     <Compile Include="routes\index.js" />
   </ItemGroup>
