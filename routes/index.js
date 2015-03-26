@@ -17,7 +17,7 @@ exports.contact = function (req, res) {
 };
 
 exports.quote = function (req, res) {
-    res.render('quote', { title: 'Stock Quote', year: new Date().getFullYear() });
+    res.render('quote', { title: 'Stock Quote Charts', year: new Date().getFullYear() });
 };
 
 

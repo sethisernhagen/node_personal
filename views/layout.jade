@@ -22,6 +22,14 @@ html
           ul.nav.navbar-nav
             li
               a(href='/about') About
+            li.dropdown
+                a(href="#",class="dropdown-toggle", data-toggle="dropdown",role="button",aria-expanded="false") Work 
+                        span.caret
+                ul(class="dropdown-menu",role="menu")
+                    li
+                        a(href="/quote") Stock Quote Charts 
+                    //li
+                        a(href="#") Another action
             li
               a(href='/contact') Contact
     block content
