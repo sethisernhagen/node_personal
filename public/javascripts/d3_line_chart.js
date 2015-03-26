@@ -1,5 +1,5 @@
 ﻿// Set the dimensions of the canvas / graph
-var margin = { top: 30, right: 20, bottom: 30, left: 50 },
+var margin = { top: 30, right: 20, bottom: 30, left: 100 },
     width = 1200 - margin.left - margin.right,
     height = 270 - margin.top - margin.bottom;
 
@@ -19,6 +19,8 @@ var xAxis = d3.svg.axis().scale(x)
     .tickFormat(d3.time.format("%d-%b-%y"));
 
 var yAxis = d3.svg.axis().scale(y)
+    .orient("left").ticks(5);
+var yAxisVolume = d3.svg.axis().scale(yVolume)
     .orient("left").ticks(5);
 
 // Define the line
@@ -53,7 +55,8 @@ d3.json("/getQuote/amzn", function (error, json) {
     data = json.data.quotes;
 
     data.forEach(function (d) {
-        d.date = Date.parse(d.date)
+        d.date = Date.parse(d.date);
+        d.volume = d.volume / 1000;
     }) ;
     
     // Scale the range of the data
@@ -89,7 +92,7 @@ d3.json("/getQuote/amzn", function (error, json) {
 
     svg2.append("g")
         .attr("class", "y axis")
-        .call(yAxis);
+        .call(yAxisVolume);
 
 });
 
@@ -102,7 +105,8 @@ function getData(symbol) {
         data = json.data.quotes;
         
         data.forEach(function (d) {
-            d.date = Date.parse(d.date)
+            d.date = Date.parse(d.date);
+            d.volume = d.volume / 1000;
         });
         
         // Scale the range of the data again 
@@ -133,6 +137,6 @@ function getData(symbol) {
             .call(xAxis);
         svg2.select(".y.axis")// change the y axis
             .duration(750)
-            .call(yAxis);
+            .call(yAxisVolume);
     });
 }
