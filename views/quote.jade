@@ -4,7 +4,7 @@ block content
   #wrap
     .container
         .row
-            h2 #{title}.
+            h2 #{title}
             #symbol-dropdown.dropdown
                 button(class="btn btn-default", data-toggle="dropdown", id="symbol-button")
                     span Amazon 
@@ -13,12 +13,15 @@ block content
                     li(data-value="amzn")
                         a(href="#").
                             Amazon
+                    li(data-value="aapl")
+                        a(href="#").
+                            Apple
                     li(data-value="googl")
                         a(href="#").
                             Google
-                    li(data-value="advs")
+                    li(data-value="znga")
                         a(href="#").
-                            Advent
+                            Zynga
             #line-chart
     #push
   .footer

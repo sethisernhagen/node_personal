@@ -41,12 +41,13 @@ exports.getQuote = function (req, res) {
 
 function get_quote(req, callback) {
      
-    var myQuote;
-    
+    var endDate = new Date();
+
+
     yahooFinance.historical({
         symbol: req.params.symbol,
-        from: '2012-01-01',
-        to: '2012-12-31',
+        from: '2010-01-01',
+        to: endDate.toDateString(),
   // period: 'd'  // 'd' (daily), 'w' (weekly), 'm' (monthly), 'v' (dividends only) 
     }, function (err, quotes) {
         if (err) {
