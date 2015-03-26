@@ -16,11 +16,20 @@ var yVolume = d3.scale.linear().range([height, 0]);
 // Define the axes
 var xAxis = d3.svg.axis().scale(x)
     .orient("bottom").ticks(5)
+    .innerTickSize(-height)
+    .outerTickSize(0)
+    .tickPadding(10)
     .tickFormat(d3.time.format("%d-%b-%y"));
 
 var yAxis = d3.svg.axis().scale(y)
+    .innerTickSize(-width)
+    .outerTickSize(0)
+    .tickPadding(10)
     .orient("left").ticks(5);
 var yAxisVolume = d3.svg.axis().scale(yVolume)
+    .innerTickSize(-width)
+    .outerTickSize(0)
+    .tickPadding(10)
     .orient("left").ticks(5);
 
 // Define the line
