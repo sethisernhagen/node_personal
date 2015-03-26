@@ -26,7 +26,7 @@ var yAxisVolume = d3.svg.axis().scale(yVolume)
 // Define the line
 var valueline = d3.svg.line()
     .x(function (d) { return x(d.date); })
-    .y(function (d) { return y(d.close); });
+    .y(function (d) { return y(d.adjClose); });
 
 var valueline2 = d3.svg.line()
     .x(function (d) { return x(d.date); })
@@ -61,7 +61,7 @@ d3.json("/getQuote/amzn", function (error, json) {
     
     // Scale the range of the data
     x.domain(d3.extent(data, function (d) { return d.date; }));
-    y.domain([0, d3.max(data, function (d) { return d.close; })]);
+    y.domain([0, d3.max(data, function (d) { return d.adjClose; })]);
     
     yVolume.domain([0, d3.max(data, function (d) { return d.volume; })]);
     
@@ -111,7 +111,7 @@ function getData(symbol) {
         
         // Scale the range of the data again 
         x.domain(d3.extent(data, function (d) { return d.date; }));
-        y.domain([0, d3.max(data, function (d) { return d.close; })]);
+        y.domain([0, d3.max(data, function (d) { return d.adjClose; })]);
         yVolume.domain([0, d3.max(data, function (d) { return d.volume; })]);
         
         // Select the section we want to apply our changes to
