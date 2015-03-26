@@ -5,6 +5,7 @@ block content
     .container
         .row
             h2 #{title}
+            br
             #symbol-dropdown.dropdown
                 button(class="btn btn-default", data-toggle="dropdown", id="symbol-button")
                     span Amazon 
@@ -22,9 +23,11 @@ block content
                     li(data-value="znga")
                         a(href="#").
                             Zynga
-            h3 Price
+            br
+            h3 Adjusted Closing Price
             #line-chart-price
-            h3 Volume
+            br
+            h3 Daily Trade Volume
             #line-chart-volume
     #push
   .footer

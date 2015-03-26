@@ -1,5 +1,5 @@
 ﻿// Set the dimensions of the canvas / graph
-var margin = { top: 30, right: 20, bottom: 30, left: 100 },
+var margin = { top: 30, right: 20, bottom: 30, left: 120 },
     width = 1200 - margin.left - margin.right,
     height = 270 - margin.top - margin.bottom;
 
@@ -65,7 +65,7 @@ d3.json("/getQuote/amzn", function (error, json) {
 
     data.forEach(function (d) {
         d.date = Date.parse(d.date);
-        d.volume = d.volume / 1000;
+        //d.volume = d.volume / 1000;
     }) ;
     
     // Scale the range of the data
@@ -115,7 +115,7 @@ function getData(symbol) {
         
         data.forEach(function (d) {
             d.date = Date.parse(d.date);
-            d.volume = d.volume / 1000;
+            //d.volume = d.volume / 1000;
         });
         
         // Scale the range of the data again 
