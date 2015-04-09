@@ -31,9 +31,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.js" />
+    <Compile Include="public\javascripts\bubble_chart.js" />
     <Compile Include="public\javascripts\d3_bubbles.js" />
+    <Compile Include="public\javascripts\d3_tip.js" />
     <Compile Include="public\javascripts\symbol_dropdown.js" />
     <Compile Include="public\javascripts\d3_line_chart.js" />
+    <Compile Include="public\javascripts\user_bubble_chart.js" />
     <Compile Include="routes\index.js" />
   </ItemGroup>
   <ItemGroup>
@@ -53,6 +56,7 @@
     <Content Include="public\javascripts\modernizr-2.6.2.js" />
     <Content Include="public\javascripts\respond.js" />
     <Content Include="public\javascripts\respond.min.js" />
+    <Content Include="public\javascripts\user_bubble_chart_users.json" />
     <Content Include="public\javascripts\_references.js" />
     <Content Include="package.json" />
     <Content Include="public\fonts\glyphicons-halflings-regular.eot" />
@@ -64,6 +68,7 @@
     <Content Include="public\stylesheets\bootstrap.min.css" />
     <Content Include="public\stylesheets\style.styl" />
     <Content Include="README.md" />
+    <Content Include="views\bubble_chart.jade" />
     <Content Include="views\quote.jade" />
     <Content Include="views\contact.jade" />
     <Content Include="views\about.jade" />

@@ -34,6 +34,7 @@ app.get('/about', routes.about);
 app.get('/contact', routes.contact);
 app.get('/quote', routes.quote);
 app.get('/getQuote/:symbol', routes.getQuote);
+app.get('/bubbleChart', routes.bubbleChart);
 
 
 http.createServer(app).listen(app.get('port'), function () {

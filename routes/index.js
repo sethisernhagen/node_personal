@@ -20,6 +20,9 @@ exports.quote = function (req, res) {
     res.render('quote', { title: 'Stock Quote Charts', year: new Date().getFullYear() });
 };
 
+exports.bubbleChart = function (req, res) {
+    res.render('bubble_chart', { title: 'D3.js Bubble Chart with Zoom', year: new Date().getFullYear() });
+};
 
 exports.getQuote = function (req, res) {
     

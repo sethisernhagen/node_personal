@@ -94,6 +94,155 @@ path {
 .tick line {
   opacity: 0.1;
 }
+.adoption-chart > svg {
+  margin-top: 10px;
+  border: 1px solid transparent;
+  -webkit-transition: border-color 0.5s ease;
+  -moz-transition: border-color 0.5s ease;
+  -o-transition: border-color 0.5s ease;
+  -ms-transition: border-color 0.5s ease;
+  transition: border-color 0.5s ease;
+}
+.adoption-chart > .svg-show {
+  border-color: #000;
+}
+.image {
+  width: 40px;
+}
+.adoption-header {
+  color: #c5c5c4;
+  background-color: #000;
+}
+.adoption-count {
+  font-size: 7em;
+  height: 1em;
+  color: #4dc3ba;
+}
+.adoption-count-header {
+  margin-top: 6%;
+  text-align: center;
+}
+.adoption-users-count-margin {
+  margin-top: 0.6em;
+}
+.adoption-count-description {
+  font-size: 2em;
+  vertical-align: text-bottom;
+  color: #000;
+  line-height: 2em;
+}
+.firm-name {
+  font-size: 2.5em;
+  color: #000;
+  margin-top: 2em;
+}
+.firm-count {
+  font-size: 7em;
+  height: 1em;
+  color: #4dc3ba;
+  margin-top: 0.3em;
+}
+.firm-count-header {
+  margin-top: 8%;
+}
+.firms-count-margin {
+  margin-top: 0.6em;
+}
+.adoption-chart {
+  display: block;
+  margin: auto;
+}
+#numFirms {
+  color: #2b706b;
+}
+.adoption-chart > svg > g > .node {
+  cursor: pointer;
+  fill: #2b706b;
+  stroke: #2b706b;
+  stroke-width: 2px;
+}
+.adoption-chart > svg > g > .node hover {
+  stroke: #000;
+}
+.adoption-chart > svg > g > .node--root {
+  fill: #f1f1f1;
+  stroke: #f1f1f1;
+}
+.adoption-chart > svg > g > .node--root-hide {
+  opacity: 0;
+  transition: linear 0.5s, opacity 0.5s linear;
+}
+.adoption-chart > svg > g > .node--root-show {
+  opacity: 1;
+  transition: linear 0.5s, opacity 0.5s linear;
+}
+.adoption-chart > svg > g > .node--leaf {
+  fill: #89e5de;
+  stroke-width: 0;
+}
+.adoption-chart > svg > g > .node--leaf hover {
+  stroke: #f00;
+}
+.label {
+  text-anchor: middle;
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+}
+.label,
+.node--root,
+.node--leaf {
+  pointer-events: none;
+}
+.d3-tip {
+  text-align: center;
+  font-size: 1.2em;
+  padding: 12px;
+  background: rgba(0,0,0,0.9);
+  color: #fff;
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 1;
+}
+/* Creates a small triangle extender for the tooltip */
+.d3-tip after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 1em;
+  width: 100%;
+  line-height: 0.2;
+  color: rgba(0,0,0,0.9);
+  position: absolute;
+  pointer-events: none;
+}
+/* Northward tooltips */
+.d3-tip.n after {
+  content: "\25BC";
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+  text-align: center;
+}
+/* Eastward tooltips */
+.d3-tip.e after {
+  content: "\25C0";
+  margin: -4px 0 0 0;
+  top: 50%;
+  left: -8px;
+}
+/* Southward tooltips */
+.d3-tip.s after {
+  content: "\25B2";
+  margin: 0 0 1px 0;
+  top: -8px;
+  left: 0;
+  text-align: center;
+}
+/* Westward tooltips */
+.d3-tip.w after {
+  content: "\25B6";
+  margin: -4px 0 0 -1px;
+  top: 50%;
+  left: 100%;
+}
 @media (min-width: 768px) {
   .navbar-collapse.collapse {
     float: right;
