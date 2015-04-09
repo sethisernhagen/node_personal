@@ -56,7 +56,7 @@
     <Content Include="public\javascripts\modernizr-2.6.2.js" />
     <Content Include="public\javascripts\respond.js" />
     <Content Include="public\javascripts\respond.min.js" />
-    <Content Include="public\javascripts\user_bubble_chart_users.json" />
+    <Content Include="public\javascripts\user_bubble_chart_users.js" />
     <Content Include="public\javascripts\_references.js" />
     <Content Include="package.json" />
     <Content Include="public\fonts\glyphicons-halflings-regular.eot" />
