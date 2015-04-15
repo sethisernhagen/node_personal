@@ -8,16 +8,25 @@ block content
             br
             p This chart uses the 
                 a(href="https://github.com/mbostock/d3/wiki/Pack-Layout", target="_blank") D3.js pack layout 
-                | to show the usage statics of a web application. The bubbles represent the firms and users for the application. Clicking on a firm bubble zooms in to show the first names of the users in that firm. You can use the toggle buttons to filter out users that have never logged into the application.
+                | to show the usage statics of a web application. The bubbles represent the firms and users for the application. Clicking on a firm bubble zooms in to show the first names of the users in that firm. You can use the radio buttons to filter users based upon their last login.
             br
             .text-center
                 #btn-group(data-toggle="buttons")
                     label(class="btn btn-default btn-custom active")
-                        input(type="radio", name="options", id="option1", autocomplete="off", checked) 
+                        input(type="radio", name="options", id="option1", value=0, autocomplete="off", checked) 
                         | All Users
                     label(class="btn btn-default btn-custom")
-                        input(type="radio", name="options", id="option2", autocomplete="off")
+                        input(type="radio", name="options", id="option2", value=1, autocomplete="off")
                         | Active Users
+                    label(class="btn btn-default btn-custom")
+                        input(type="radio", name="options", id="option3", value=2, autocomplete="off")
+                        | Active Within 90 Days
+                    label(class="btn btn-default btn-custom")
+                        input(type="radio", name="options", id="option4", value=3, autocomplete="off")
+                        | Active Within 30 Days
+                    label(class="btn btn-default btn-custom")
+                        input(type="radio", name="options", id="option5", value=4, autocomplete="off")
+                        | Active Within 7 Days
             #dyno-counts(class="col-md-4 col-lg-5 text-center adoption-count-header")
             #chart-column(class="col-md-8 col-lg-7 text-center")
                 #chart(class="adoption-chart")

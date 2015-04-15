@@ -1,61 +1,56 @@
-﻿var root;
-var rootUpdated;
+﻿var allData;
+var root;
 var pack = null;
-var nodes;
 var circle = null;
 var node = null;
 var raw;
-var text = null
-var chartIsFiltered = false;
+var text = null;
+var filterOption;
 var view;
 var k;
 var focus;
 var firmTotal = null,
-    userTotal = null,
-    firmTotalActive = null,
-    userTotalActive = null;
+    userTotal = null;
+var svg;
+var tip;
+var firmSize;
+
 
 //change counts on zoom out
 function showAdimCount() {
-    var fTotal;
-    var uTotal;
-    
-    if (chartIsFiltered) {
-        fTotal = firmTotalActive;
-        uTotal = userTotalActive;
-    }
-    else {
-        fTotal = firmTotal;
-        uTotal = userTotal;
-    }
-    
-    document.getElementById("dyno-counts").innerHTML = "<div id='numFirms' class='adoption-count'>" + fTotal + "</div><div class='adoption-count-description'>FIRMS</div><div id='numUsers' class='adoption-count  adoption-users-count-margin'>" + uTotal + "</div><div class='adoption-count-description'>USERS</div>";
+    document.getElementById("dyno-counts").innerHTML = "<div id='numFirms' class='adoption-count'>" + firmTotal + "</div><div class='adoption-count-description'>FIRMS</div><div id='numUsers' class='adoption-count  adoption-users-count-margin'>" + userTotal + "</div><div class='adoption-count-description'>USERS</div>";
 }
 
 function chart(config) {
     
-    var tip = d3.tip()
-        .attr('class', 'd3-tip')
-        .html(function (d) {
+    tip = d3.tip()
+    .attr('class', 'd3-tip')
+    .html(function (d) {
         
         var userText = "user";
-        var numUsers;
         
-        if (chartIsFiltered)
-            numUsers = d.sizeLoggedIn;
-        else
-            numUsers = d.size;
-        
-        if (numUsers > 1) {
+        if (d.size > 1) {
             userText = userText + "s";
         }
         
-        return "<strong>" + d.name + "</strong><br />" + numUsers + " " + userText + ".";
+        return "<strong>" + d.name + "</strong><br />" + d.size + " " + userText + ".";
     });
+    
+    svg = d3.select("#chart")
+        .append("svg")
+        .attr("width", config.diameter)
+        .attr("height", config.diameter)
+        .append("g")
+        .attr("transform", "translate(" + config.diameter / 2 + "," + config.diameter / 2 + ")")
+        .call(tip);
+    
+    pack = d3.layout.pack()
+            .padding(5)
+            .size([config.diameter - config.margin, config.diameter - config.margin])
+            .value(function (d) { return d.size; });
     
     var edges = null,
         rScale = null;
-    
     
     var color = d3.scale.linear()
         .domain([-1, 5])
@@ -91,79 +86,14 @@ function chart(config) {
         d3.json(config.dataUrl, function (error, json) {
             if (error) return console.warn(error);
             
-            //filter firms missing children
-            json.children = json.children.filter(hasChildren);
+            allData = json;
             
-            root = json;
+            root = allData.all;
             
             spinner.stop();
             
-            visualizeit();
+            visualizeIt();
         });
-    }
-    
-    function visualizeit() {
-        
-        pack = d3.layout.pack()
-            .padding(5)
-            .size([config.diameter - config.margin, config.diameter - config.margin])
-            .value(function (d) { return d.size; });
-        
-        svg = d3.select("#chart")
-            .append("svg")
-            .attr("width", config.diameter)
-            .attr("height", config.diameter)
-            .append("g")
-            .attr("transform", "translate(" + config.diameter / 2 + "," + config.diameter / 2 + ")")
-            .call(tip);
-        
-        focus = root;
-        
-        firmTotal = d3.sum(pack.nodes(root), function (d) { return d.parent === root; }).toString();
-        
-        firmTotalActive = d3.sum(pack.nodes(root),
-            function (d) {
-            return d.parent === root && d.sizeLoggedIn > 0;
-        }).toString();
-        
-        userTotal = d3.sum(root.children, function (d) { return d.size; });
-        
-        userTotalActive = d3.sum(root.children,
-            function (d) {
-            return d.sizeLoggedIn;
-        });
-        
-        showAdimCount();
-        
-        circle = svg.selectAll("circle")
-            .data(pack.nodes(root))
-            .enter().append("circle")
-            .attr("class", function (d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
-            .on("click", function (d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); })
-            .on('mouseover', tip.show)
-            .on('mouseout', tip.hide);
-        
-        text = svg.selectAll("text")
-            .data(pack.nodes(root))
-            .enter().append("text")
-            .attr("class", "label")
-            .style("fill-opacity", 0)
-            .style("display", "none")
-            .text(function (d) {
-                if (d.children === undefined)
-                    return d.name;//text = name for users
-                else
-                    return null;
-            });
-        
-        node = svg.selectAll("circle,text");
-        
-        d3.select("#chart")
-                //.style("background", color(-1))
-                .on("click", function () { zoom(root); });
-        
-        zoomTo([root.x, root.y, root.r * 2 + config.margin]);
-
     }
     
     getData();
@@ -175,8 +105,13 @@ function chart(config) {
 function zoomTo(v) {
     k = config.diameter / v[2];
     view = v;
-    node.attr("transform", function (d) { return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")"; });
-    circle.attr("r", function (d) { return d.r * k; });
+    
+    circle
+        .attr("transform", function (d) { return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")"; })
+        .attr("r", function (d) { return d.r * k; });
+    
+    text
+        .attr("transform", function (d) { return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")"; });
 }
 
 function endall(transition, callback) {
@@ -190,12 +125,8 @@ function endall(transition, callback) {
 function showFirmCount(firm) {
     
     var userText = "USER";
-    var firmSize;
     
-    if (chartIsFiltered)
-        firmSize = firm.sizeLoggedIn;
-    else
-        firmSize = firm.size;
+    firmSize = firm.size;
     
     if (firmSize > 1) {
         userText = userText + "S";
@@ -207,8 +138,9 @@ function showFirmCount(firm) {
 function zoom(d) {
     
     //change counts on zoom in/out
-    if (d.parent === root) {
+    if (d.parent === root && focus !== d) {
         showFirmCount(d);
+        focus = d;
         d3.selectAll("node--leaf").style("pointer-events", "none");
         d3.select(".d3-tip").classed("hidden", true);
         d3.select(".node--root").classed({ "node--root-hide": true, "node--root-show": false });
@@ -216,13 +148,13 @@ function zoom(d) {
 
     }
     else {
+        focus = root;
         showAdimCount();
         d3.selectAll("node--leaf").style("pointer-events", "all");
         d3.select(".node--root").classed({ "node--root-hide": false, "node--root-show": true });
         d3.select("svg").classed({ "svg-show": false });
+        setTimeout(function () { d3.select(".d3-tip").classed("hidden", false); }, 750);
     }
-    
-    var focus0 = focus; focus = d;
     
     var transition = d3.transition()
         .duration(750)
@@ -236,7 +168,6 @@ function zoom(d) {
         }
     });
     
-    
     transition.selectAll("text")
         .filter(function (d) { return d.parent === focus || this.style.display === "inline"; })
         .style("fill-opacity", function (d) { return d.parent === focus ? 1 : 0; })
@@ -245,55 +176,95 @@ function zoom(d) {
 
 }
 
-function filterActive(filterActive) {
+
+function visualizeIt(filter) {
     
     //set global variable
-    chartIsFiltered = filterActive;
-    
-    //change counts to reflect filtering
-    showAdimCount();
+    filterOption = filter;
     
     d3.select("svg").classed({ "svg-show": false });
+    
+    //change property for pack based on filter
+    switch (filter) {
+        case "1":
+            root = allData.loggedIn;
+            break;
+        case "2":
+            root = allData.loggedIn90Day;
+            break;
+        case "3":
+            root = allData.loggedIn30Day;
+            break;
+        case "4":
+            root = allData.loggedIn7Day;
+            break;
+        case "5":
+            root = allData.loggedIn1Day;
+            break;
+        default:
+            root = allData.all;
+    }
+    
+    focus = root;
+    
+    circle = svg.selectAll("circle")
+        .data(pack.nodes(root), function (d) { return d.id; });
+    
+    text = svg.selectAll("text")
+        .data(pack.nodes(root), function (d) { return d.id; });
     
     //some strange variables we need
     view = [root.x, root.y, root.r * 2 + config.margin];
     k = config.diameter / view[2];
     
-    //change property for pack based on filter
-    if (filterActive)
-        pack.padding(5).value(function (d) { return d.sizeLoggedIn; });
-    else
-        pack.padding(5).value(function (d) { return d.size; });
+    circle
+        .enter()
+        .append("circle")
+        .attr("class", function (d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
+        .on("click", function (d) { zoom(d) })
+        .on('mouseover', tip.show)
+        .on('mouseout', tip.hide);
     
-    var newPack = pack.nodes(root);
-    
-    //transition circles
-    circle.transition()
-    .duration(1500)
-    .attr("r", function (d) {
-        return d.r * k;
-    })
-    .attr("class", function (d) {
-        if (d.sizeLoggedIn === 0 && filterActive)
-            return d.parent ? d.children ? "node hidden" : "node node--leaf hidden" : "node node--root node--root-show";
-        else
-            return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root node--root-show";
-    })
-    .attr("transform", function (d) { return "translate(" + (d.x - view[0]) * k + "," + (d.y - view[1]) * k + ")"; });
-    
-    //transition text
-    text.transition()
-    .style("fill-opacity", 0)
-    .attr("class", function (d) {
-        if (d.sizeLoggedIn === 0 && filterActive)
-            return "label hidden";
-        else
-            return "label";
+    text.enter().append("text")
+        .attr("class", "label")
+        .style("fill-opacity", 0)
+        .style("display", "none")
+        .text(function (d) {
+        if (d.children == undefined)
+            return d.name;
     });
+    
+    circle.transition()
+        .duration(1750)
+        .attr("class", function (d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
+        .attr("transform", function (d) { return "translate(" + (d.x - view[0]) * k + "," + (d.y - view[1]) * k + ")"; })
+        .attr("r", function (d) { return d.r * k; });
+    
+    text.transition()
+        .duration(1500)
+        .attr("transform", function (d) { return "translate(" + (d.x - view[0]) * k + "," + (d.y - view[1]) * k + ")"; });
+    
+    circle.exit()
+        .transition()
+        .remove();
+    
+    text.exit()
+        .transition()
+        .remove();
+    
+    //recount users
+    firmTotal = d3.sum(root.children, function (d) { return d.parent === root; }).toString();
+    userTotal = d3.sum(root.children, function (d) { return d.size; });
+    
+    //change counts to reflect filtering
+    showAdimCount();
     
     //make sure mouse events are not disabled
     d3.selectAll("node--leaf").style("pointer-events", "all");
     
     //make sure tooltips are visible
     d3.select(".d3-tip").classed("hidden", false);
+    
+    d3.selectAll("text").style("fill-opacity", 0)
+        .style("display", "none");
 }

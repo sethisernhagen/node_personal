@@ -3,5 +3,6 @@
 chart(config);
 
 $('input[type="radio"]').change(function (e) {
-    filterActive(!$('input[type="radio"]').prop("checked"));
+    //filter chart
+    visualizeIt($('input[name=options]:checked').val());
 });
