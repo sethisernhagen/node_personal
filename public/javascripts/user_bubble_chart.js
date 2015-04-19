@@ -16,22 +16,29 @@ var firmSize;
 
 //figure out login time category values
 
+var chartTime = 1429305235 * 1000
+console.log("chartTime " + chartTime);
+
 //get yesterday
-var yesterday = new Date(1429300800 * 1000);
+var yesterday = new Date(chartTime);
 yesterday.setHours(0, 0, 0, 0);
 yesterday.setDate(yesterday.getDate() - 1);
+console.log("yesterday " + yesterday);
 
-var daysAgo7 = new Date();
+var daysAgo7 = new Date(chartTime);
 daysAgo7.setHours(0, 0, 0, 0);
 daysAgo7.setDate(daysAgo7.getDate() - 8);
+console.log("daysAgo7 " + daysAgo7)
 
-var daysAgo30 = new Date();
+var daysAgo30 = new Date(chartTime);
 daysAgo30.setHours(0, 0, 0, 0);
 daysAgo30.setDate(daysAgo30.getDate() - 31);
+console.log(daysAgo30);
 
-var daysAgo90 = new Date();
+var daysAgo90 = new Date(chartTime);
 daysAgo90.setHours(0, 0, 0, 0);
 daysAgo90.setDate(daysAgo90.getDate() - 91);
+console.log(daysAgo90);
 
 var daysAgo1Seconds = yesterday.getTime() / 1000;
 var daysAgo7Seconds = daysAgo7.getTime() / 1000;
