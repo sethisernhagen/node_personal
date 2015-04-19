@@ -1,19 +1,42 @@
-﻿var allData;
+﻿﻿ var allData;
 var root;
 var pack = null;
 var circle = null;
 var node = null;
-var raw;
 var text = null;
 var filterOption;
 var view;
 var k;
 var focus;
-var firmTotal = null,
-    userTotal = null;
+var firmTotal = null;
+var userTotal = null;
 var svg;
 var tip;
 var firmSize;
+
+//figure out login time category values
+
+//get yesterday
+var yesterday = new Date(1429300800 * 1000);
+yesterday.setHours(0, 0, 0, 0);
+yesterday.setDate(yesterday.getDate() - 1);
+
+var daysAgo7 = new Date();
+daysAgo7.setHours(0, 0, 0, 0);
+daysAgo7.setDate(daysAgo7.getDate() - 8);
+
+var daysAgo30 = new Date();
+daysAgo30.setHours(0, 0, 0, 0);
+daysAgo30.setDate(daysAgo30.getDate() - 31);
+
+var daysAgo90 = new Date();
+daysAgo90.setHours(0, 0, 0, 0);
+daysAgo90.setDate(daysAgo90.getDate() - 91);
+
+var daysAgo1Seconds = yesterday.getTime() / 1000;
+var daysAgo7Seconds = daysAgo7.getTime() / 1000;
+var daysAgo30Seconds = daysAgo30.getTime() / 1000;
+var daysAgo90Seconds = daysAgo90.getTime() / 1000;
 
 
 //change counts on zoom out
@@ -33,7 +56,7 @@ function chart(config) {
             userText = userText + "s";
         }
         
-        return "<strong>" + d.name + "</strong><br />" + d.size + " " + userText + ".";
+        return "<strong>" + d.name + "</strong><br />" + d.size + " Advent Direct " + userText + ".";
     });
     
     svg = d3.select("#chart")
@@ -93,6 +116,8 @@ function chart(config) {
             spinner.stop();
             
             visualizeIt();
+            
+            $('.btn').removeClass("hidden");
         });
     }
     
@@ -144,7 +169,7 @@ function zoom(d) {
         d3.selectAll("node--leaf").style("pointer-events", "none");
         d3.select(".d3-tip").classed("hidden", true);
         d3.select(".node--root").classed({ "node--root-hide": true, "node--root-show": false });
-        setTimeout(function () { d3.select("svg").classed({ "svg-show": true }) }, 500);
+        d3.select("svg").classed({ "svg-show": true });
 
     }
     else {
@@ -153,7 +178,8 @@ function zoom(d) {
         d3.selectAll("node--leaf").style("pointer-events", "all");
         d3.select(".node--root").classed({ "node--root-hide": false, "node--root-show": true });
         d3.select("svg").classed({ "svg-show": false });
-        setTimeout(function () { d3.select(".d3-tip").classed("hidden", false); }, 750);
+        //delay enabling tips until zoomed out fully
+        setTimeout(function () { d3.select(".d3-tip").classed("hidden", false); }, 1000);
     }
     
     var transition = d3.transition()
@@ -220,7 +246,27 @@ function visualizeIt(filter) {
     circle
         .enter()
         .append("circle")
-        .attr("class", function (d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
+        .attr("class", function (d) {
+        if (!d.parent)
+            return "node node--root";
+        else if (!d.children) {
+            if (d.lastLogin == 0)
+                return "node node--leaf node--leaf--inactive";
+            if (d.lastLogin >= daysAgo1Seconds)
+                return "node node--leaf node--leaf--1";
+            if (d.lastLogin >= daysAgo7Seconds)
+                return "node node--leaf node--leaf--7";
+            if (d.lastLogin >= daysAgo30Seconds)
+                return "node node--leaf node--leaf--30";
+            if (d.lastLogin >= daysAgo90Seconds)
+                return "node node--leaf node--leaf--90";
+            if (d.lastLogin < daysAgo90Seconds)
+                return "node node--leaf node--leaf--active";
+        }
+        else
+            return "node";
+
+    })
         .on("click", function (d) { zoom(d) })
         .on('mouseover', tip.show)
         .on('mouseout', tip.hide);
@@ -236,7 +282,6 @@ function visualizeIt(filter) {
     
     circle.transition()
         .duration(1750)
-        .attr("class", function (d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
         .attr("transform", function (d) { return "translate(" + (d.x - view[0]) * k + "," + (d.y - view[1]) * k + ")"; })
         .attr("r", function (d) { return d.r * k; });
     
@@ -253,8 +298,14 @@ function visualizeIt(filter) {
         .remove();
     
     //recount users
-    firmTotal = d3.sum(root.children, function (d) { return d.parent === root; }).toString();
-    userTotal = d3.sum(root.children, function (d) { return d.size; });
+    if (root.children === undefined) {
+        firmTotal = 0;
+        userTotal = 0;
+    }
+    else {
+        firmTotal = d3.sum(root.children, function (d) { return d.parent === root; }).toString();
+        userTotal = d3.sum(root.children, function (d) { return d.size; });
+    }
     
     //change counts to reflect filtering
     showAdimCount();
@@ -267,4 +318,6 @@ function visualizeIt(filter) {
     
     d3.selectAll("text").style("fill-opacity", 0)
         .style("display", "none");
+    
+    d3.select(".node--root").classed({ "node--root-hide": false, "node--root-show": true });
 }

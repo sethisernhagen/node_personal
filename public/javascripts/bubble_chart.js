@@ -1,4 +1,4 @@
-﻿var config = { diameter: 720, margin: 50, dataUrl: "/javascripts/user_bubble_chart_users.js" };
+﻿var config = { diameter: 720, margin: 50, dataUrl: "/json/user_bubble_chart_users.json" };
 
 chart(config);
 
