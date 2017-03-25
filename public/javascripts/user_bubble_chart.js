@@ -57,7 +57,7 @@ function chart(config) {
             userText = userText + "s";
         }
         
-        return "<strong>" + d.name + "</strong><br />" + d.size + " Advent Direct " + userText + ".";
+        return "<strong>" + d.name + "</strong><br />" + d.size + " Application " + userText + ".";
     });
     
     svg = d3.select("#chart")
