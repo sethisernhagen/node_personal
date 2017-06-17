@@ -11,6 +11,6 @@
     "express": "3.4.4",
     "jade": "*",
     "stylus": "*",
-    "yahoo-finance": "^0.2.11"
+    "yahoo-finance": "^0.3.2"
   }
 }
