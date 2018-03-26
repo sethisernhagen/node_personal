@@ -6,14 +6,14 @@ block content
         .row
             h2 #{title}
             br
-            p This chart uses the 
-                a(href="https://github.com/mbostock/d3/wiki/Pack-Layout", target="_blank") D3.js pack layout 
+            p This chart uses the
+                a(href="https://github.com/mbostock/d3/wiki/Pack-Layout", target="_blank") D3.js pack layout
                 | to show the usage statics of a web application. The bubbles represent the firms and users that are entitiled to use the application. The opacity of each user bubble is set according to when the user has last logged in. Clicking on a firm bubble zooms in to show the first names of the users in that firm. You can use the radio buttons to filter users based upon their last login.
             br
             .text-center
                 #btn-group(data-toggle="buttons")
                     label(class="btn btn-default btn-custom active")
-                        input(type="radio", name="options", id="option1", value=0, autocomplete="off", checked) 
+                        input(type="radio", name="options", id="option1", value=0, autocomplete="off", checked)
                         | All Users
                     label(class="btn btn-default btn-custom")
                         input(type="radio", name="options", id="option2", value=1, autocomplete="off")
@@ -37,6 +37,5 @@ block content
 block scripts
     script(src='http://d3js.org/d3.v3.min.js')
     script(src='/javascripts/d3_tip.js')
-    script(src='https://spin.js.org/spin.js')
     script(src='/javascripts/user_bubble_chart.js')
     script(src='/javascripts/bubble_chart.js')
