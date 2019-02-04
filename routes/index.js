@@ -25,7 +25,7 @@ exports.bubbleChart = function (req, res) {
 };
 
 exports.getQuote = function (req, res) {
-    
+
 
     get_quote(req, function (err, quotes) {
         if (err != null) {
@@ -33,7 +33,7 @@ exports.getQuote = function (req, res) {
             res.end(JSON.stringify({ error: 'file_error', message: err.message }) + '\n');
             return;
         }
-        
+
         res.writeHead(200, { 'Content-Type' : 'application/json' });
         res.end(JSON.stringify({ error: null, data: { quotes: quotes } }) + '\n');
     });
@@ -43,15 +43,15 @@ exports.getQuote = function (req, res) {
 
 
 function get_quote(req, callback) {
-     
+
     var endDate = new Date();
 
 
     yahooFinance.historical({
         symbol: req.params.symbol,
-        from: '2010-01-01',
+        from: '2015-01-01',
         to: endDate.toDateString(),
-  // period: 'd'  // 'd' (daily), 'w' (weekly), 'm' (monthly), 'v' (dividends only) 
+  // period: 'd'  // 'd' (daily), 'w' (weekly), 'm' (monthly), 'v' (dividends only)
     }, function (err, quotes) {
         if (err) {
             callback(err);
