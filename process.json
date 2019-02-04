@@ -1,0 +1,16 @@
+// 20190203165121
+// https://raw.githubusercontent.com/Azure-Samples/nodejs-docs-hello-world/master/process.json
+
+{
+    "name": "worker",
+    "script": "./app.js",
+    "instances": 1,
+    "merge_logs": true,
+    "log_date_format": "YYYY-MM-DD HH:mm Z",
+    "watch": true,
+    "watch_options": {
+      "followSymlinks": true,
+      "usePolling": true,
+      "interval": 5
+    }
+  }
