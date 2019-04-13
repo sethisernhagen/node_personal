@@ -16,5 +16,8 @@
     "serve-favicon": "^2.5.0",
     "stylus": "*",
     "yahoo-finance": "^0.3.6"
+  },
+  "scripts": {
+    "start": "node app.js"
   }
 }
