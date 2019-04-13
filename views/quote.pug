@@ -6,13 +6,13 @@ block content
         .row
             h2 #{title}
             br
-            p These charts use the D3.js visualization library to display the daily closing price and sales volume of a stock.  When a company is selected in the dropdown, the data for that stock is fetched from Yahoo's Finance API using the Node.js 
-                a(href="https://www.npmjs.com/package/yahoo-finance", target="_blank") yahoo-finance 
+            p These charts use the D3.js visualization library to display the daily closing price and sales volume of a stock.  When a company is selected in the dropdown, the data for that stock is fetched from Yahoo's Finance API using the Node.js
+                a(href="https://www.npmjs.com/package/yahoo-finance", target="_blank") yahoo-finance
                 | package.
             br
             #symbol-dropdown.dropdown
                 button(class="btn btn-default", data-toggle="dropdown", id="symbol-button")
-                    span Amazon (AMZN) 
+                    span Amazon (AMZN)
                     span.caret
                 ul(class="dropdown-menu", role="menu", aria-labelledby="dropdownMenu1", id="symbol-ul")
                     li(data-value="amzn")
@@ -60,5 +60,5 @@ block content
 
 block scripts
     script(src='/javascripts/symbol_dropdown.js')
-    script(src='http://d3js.org/d3.v3.min.js')
+    script(src='https://d3js.org/d3.v3.min.js')
     script(src='/javascripts/d3_line_chart.js')
